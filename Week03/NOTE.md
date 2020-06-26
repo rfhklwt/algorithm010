@@ -58,5 +58,25 @@ class Solution:
 
 从这个几何图形可以建立Newton方法的代数公式。切线在$x_0$的斜率由导数$f'(x_0)$给出，切线上的一点是$(x_0, f(x_0))$。直线方程的点斜式是$y - f(x_0) = f'(x_0)(x - x_0)$，所以求切线与$x$轴的交点等同于在直线方程中取$y = 0$：
 
-$\begin{aligned} f^{\prime}\left(x_{0}\right)\left(x-x_{0}\right) &=0-f\left(x_{0}\right) \\ x-x_{0} &=-\frac{f\left(x_{0}\right)}{f^{\prime}\left(x_{0}\right)} \\ x &=x_{0}-\frac{f\left(x_{0}\right)}{f^{\prime}\left(x_{0}\right)} \end{aligned}$
+$$\begin{aligned} f^{\prime}\left(x_{0}\right)\left(x-x_{0}\right) &=0-f\left(x_{0}\right) \\ x-x_{0} &=-\frac{f\left(x_{0}\right)}{f^{\prime}\left(x_{0}\right)} \\ x &=x_{0}-\frac{f\left(x_{0}\right)}{f^{\prime}\left(x_{0}\right)} \end{aligned}$$
+
+解$x$给出了根的近似值，我们把它叫做$x_1$。下一步是重复整个过程，从$x_1$开始产生$x_2$，如此等等，得到如下迭代公式：
+
+Newton法：
+$$x_0 = inital\space guess$$
+$$x_{i+1}=x_{i}-\frac{f\left(x_{i}\right)}{f^{\prime}\left(x_{i}\right)}, \quad i=0,1,2, \cdots$$
+
+于是求某个数a的平方根，其实是求$f(x) = x^2 - a$的根，于是迭代是：
+$$x_{i+1}=x_{i}-\frac{f\left(x_{i}\right)}{f^{\prime}\left(x_{i}\right)}=x_{i}-\frac{x_{i}^{2}-a}{2 x_{i}}=\frac{x_{i}^{2}+a}{2 x_{i}}=\frac{x_{i}+\frac{a}{x_{i}}}{2}$$
+
+故代码如下：
+```
+def sqrt(a):
+    new_x, x = 10, 1
+    while abs(x - new_x) > 0.0000001:
+        x, new_x = new_x, (x + a / x) / 2
+    return new_x
+```
+## 迭代和递归的区别
+
 
