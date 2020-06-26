@@ -54,7 +54,7 @@ class Solution:
 ## Newton-Raphson法
 *[注：以下公式需要在浏览器添加MathJax Plugin for Github扩展程序才能正确显示]*
 
-如图所示给出了Newton法的集和图性。要求出$f(x) = 0$的根，初始估计$x_0$是给定的，画出函数$f$在$x_0$的切线。切线朝着根的方向贴近函数向下到$x$轴.切线与$x$轴的交点就是近似根，但是如果$f$弯曲，很可能不准确，因此**这一步要反复进行**。
+如图所示给出了Newton法的几何图形。要求出$f(x) = 0$的根，初始估计$x_0$是给定的，画出函数$f$在$x_0$的切线。切线朝着根的方向贴近函数向下到$x$轴.切线与$x$轴的交点就是近似根，但是如果$f$弯曲，很可能不准确，因此**这一步要反复进行**。
 
 ![Newton](https://raw.githubusercontent.com/rfhklwt/algorithm010/master/Week03/Newton.png)
 
