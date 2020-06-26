@@ -51,10 +51,12 @@ class Solution:
 
 
 ## Newton-Raphson法
-如图所示给出了Newton法的集和图性。要求出$f(x) = 0$d根，初始估计$x_0$是给定的，画出函数$f$在x_0的切线。切线朝着根的方向贴近函数向下到$x$轴
+[注：以下公式需要在浏览器添加MathJax Plugin for Github扩展程序才能正确显示]
+如图所示给出了Newton法的集和图性。要求出$f(x) = 0$的根，初始估计$x_0$是给定的，画出函数$f$在$x_0$的切线。切线朝着根的方向贴近函数向下到$x$轴.切线与$x$轴的交点就是近似根，但是如果$f$弯曲，很可能不准确，因此**这一步要反复进行**。
 
+![Newton](https://raw.githubusercontent.com/rfhklwt/algorithm010/master/Week03/Newton.png)
 
-![Newton](https://github.com/rfhklwt/algorithm010/tree/master/Week03/Newton.png)
+从这个几何图形可以建立Newton方法的代数公式。切线在$x_0$的斜率由导数$f'(x_0)$给出，切线上的一点是$(x_0, f(x_0))$。直线方程的点斜式是$y - f(x_0) = f'(x_0)(x - x_0)$，所以求切线与$x$轴的交点等同于在直线方程中取$y = 0$：
 
-## Mathematical formula `$y = x^2$`
-Math block:
+$\begin{aligned} f^{\prime}\left(x_{0}\right)\left(x-x_{0}\right) &=0-f\left(x_{0}\right) \\ x-x_{0} &=-\frac{f\left(x_{0}\right)}{f^{\prime}\left(x_{0}\right)} \\ x &=x_{0}-\frac{f\left(x_{0}\right)}{f^{\prime}\left(x_{0}\right)} \end{aligned}$
+
