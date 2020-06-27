@@ -12,7 +12,7 @@
        "()()()"
      ]
 ```
-首先根据递归模板我们可以写出第一种版本：
+首先根据覃老师的递归模板我们可以写出第一种版本：
 ```
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
@@ -50,6 +50,69 @@ class Solution:
 
 **另外，parens.append(p)语句也可以写成parens += p,（有逗号）。**
 
+通过这个例子我提取出了适合我自己的一个模板，其实也算是个回溯模板：整体框架可以写成下面：
+```
+def backtrace(p, a, res=[]):
+    if 满足递归终结条件:
+        res.append(p)
+    else:
+        # 通常这里需要加if语句或者for语句
+        # backtrace是数量取决于当前层我可以取的可能性是多少，像上一题放括号，每一层可以取的可能性只有2个，要么左括号要么右括号，因此只有2个backtrace语句。
+        backtrace(update p, a)
+    return res
+```
+这里p是每个可能性，res是存放所有可能性。a是根据不同的题母而对应产生的变量，可能不止一个变量。通常a的确定比较难，一般确定了a，递归终结条件也好写了。
+
+1. 首先我们来看组合题：给定两个整数 n 和 k，返回 1 ... n 中所有可能的 k 个数的组合。根据模板，我们可以写出如下：
+```
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        def backtrace(p, first, res=[])
+            # 递归终结条件的思考比较难，因题而异
+            if len(p) == k:
+                res.append(p)
+            else:
+                # 对于每一层我们可以添加进p的数有哪些
+                for i in range(first, n - (k - len(p) + 2):
+                    # 进入下一层递归
+                    backtrace(p + [i], i + 1)
+            return res
+        return backtrace([], 1)
+```
+2. 接着我们再看全排列问题: 给定一个 没有重复 数字的序列，返回其所有可能的全排列。好，根据模板，我们可以写出：
+```
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        def backtrace(p, new_nums, res=[]):
+            if not new_nums:
+                res.append(p)
+            else:
+                for i, c in enumerate(new_nums):
+                    backtracce(p + [c], new_nums[:i] + new_nums[i + 1:])
+            return res
+        return backtrace([], nums)
+```
+
+3. 做到这里应该就有些感觉了，我们再看看**困难**级别的N皇后问题，这里的a就变成了3个变量了：
+```
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        # 递归框架
+        def backtrace(p, xy_diff, xy_sum, res=[]):
+            if len(p) == n:
+                res.append(p)
+            else:
+                # 每一层都有n种摆法，只不过要加上一些条件来去除
+                for i in range(n):
+                    if i not in p and i - len(p) not in xy_diff and i + len(p) not in xy_sum:
+                        backtrace(p + [i], xy_diff + [i - len(p)], xy_sum + [i + len(p)])
+            return res
+        result = backtrace([], [], [])
+        # 返回值再根据题目修改修改
+        return [['.' * i + 'Q' + '.' * (n - i - 1) for i in sol] for sol in result]
+```
+总的来说，基本上这类题，只要套用类似的模板，就能得到正确的答案了。这类模板的好处在于，代码精炼、容易理解。但是递归的题目难还是难在如何确定a变量。只要想通了这点，再写出正确的递归答案就不难了。
+
 
 ## Newton-Raphson法
 *[注：以下公式需要在浏览器添加MathJax Plugin for Github扩展程序才能正确显示]*
@@ -84,5 +147,32 @@ def sqrt(a):
     return new_x
 ```
 ## 迭代和递归的区别
+
+### Iteration
+- 定义：用变量的原值计算出一个新值，参考For loop
+- 优点：
+1. 效率高，运行时间随循环次数增加而增加
+
+2. 没有额外的开销
+- 缺点：
+1. 不容易理解
+
+2. 没递归简洁
+
+3. 编写复杂问题困难
+
+### Recursion
+
+- 定义：程序调用自身
+- 优点：
+1. 化大问题为小问题，减少代码量
+
+2. 用有限的语句
+
+3. 代码建解，可读性好
+- 缺点：
+1. 递归调用函数，浪费空间
+
+2. 递归太深容易造成堆栈溢出等错误
 
 
