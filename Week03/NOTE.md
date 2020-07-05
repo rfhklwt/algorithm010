@@ -13,7 +13,7 @@
      ]
 ```
 首先根据覃老师的递归模板我们可以写出第一种版本：
-```
+```Python
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         res = []
@@ -33,7 +33,7 @@ class Solution:
 left和right都设置为0然后不断增加，结束条件是达到了括号的数量MAX = n就可以结束。同时给子函数传进去一个res，来保存每一个可能的结果。这样的写法比较逻辑清晰，但是代码稍微冗余。改进的点：
 1. 稍微想一下，可以考虑把_generate函数写进到generateParenthesis函数里面，而不是并行的，同时把res的定义放到函数声明里面，利用默认参数这个功能，这样每次递归函数的时候函数的参数可以写少。
 2. 另一个就是可以去掉MAX，只要把left和right的初始值就设置成MAX，然后每次递归都减一就好了，这样我们就可以省去2个参数。于是得到的比较简短的代码如下：
-```
+```Python
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         def generate(p, left, right, parens=[]):
@@ -51,7 +51,7 @@ class Solution:
 **另外，parens.append(p)语句也可以写成parens += p,（有逗号）。**
 
 通过这个例子我提取出了适合我自己的一个模板，其实也算是个回溯模板：整体框架可以写成下面：
-```
+```Python
 def backtrace(p, a, res=[]):
     if 满足递归终结条件:
         res.append(p)
@@ -64,7 +64,7 @@ def backtrace(p, a, res=[]):
 这里p是每个可能性，res是存放所有可能性。a是根据不同的题母而对应产生的变量，可能不止一个变量。通常a的确定比较难，一般确定了a，递归终结条件也好写了。
 
 1. 首先我们来看组合题：给定两个整数 n 和 k，返回 1 ... n 中所有可能的 k 个数的组合。根据模板，我们可以写出如下：
-```
+```Python
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
         def backtrace(p, first, res=[])
@@ -80,7 +80,7 @@ class Solution:
         return backtrace([], 1)
 ```
 2. 接着我们再看全排列问题: 给定一个 没有重复 数字的序列，返回其所有可能的全排列。好，根据模板，我们可以写出：
-```
+```Python
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         def backtrace(p, new_nums, res=[]):
@@ -94,7 +94,7 @@ class Solution:
 ```
 
 3. 做到这里应该就有些感觉了，我们再看看**困难**级别的N皇后问题，这里的a就变成了3个变量了：
-```
+```Python
 class Solution:
     def solveNQueens(self, n: int) -> List[List[str]]:
         # 递归框架
