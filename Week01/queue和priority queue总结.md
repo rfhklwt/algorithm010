@@ -14,7 +14,7 @@ Rear：获取queue最右边的一个item -> O(1)
 - queue.Queue
 
 1. 采用list的话，一些等效操作如下：
-```
+```Python
 queue = []
 queue.append('a')
 queue.pop(0) # 时间复杂度：O(n)
@@ -22,7 +22,7 @@ queue.pop(0) # 时间复杂度：O(n)
 需要注意的是，用list来实现queue不太合适，因为在开始处插入或删除元素需要将所有其他元素移位一个，需要O(n)时间。另外如果list空了后再进行pop操作会抛出异常，因此不建议采用list来实现。
 
 2. 采用collections模块中的deque类（实际上这是双端队列），是比较常用的类。因此从容器两端进行插入和读取都只仅仅O(1)的时间复杂度。一些等效操作如下：
-```
+```Python
 queue = collections.deque()
 queue.append('a')       # 从右端加入 -> O(1)
 queue.appendleft('a')   # 从左端加入 -> O(1)
@@ -51,7 +51,7 @@ Priority Queue是普通queue的一个扩展，它拥有如下特性：
 2. 当元素从priority queue中弹出时，将以递增顺序或递减顺序获得结果。 同时，当从queue中弹出元素时，将在结果中获得FIFO（先入先出）数据顺序
 #### 实现方式:
  - 采用queue来实现
-```
+```Python
 # A simple implementation of Priority Queue using Queue.
 class PriorityQueue(object):
 	def __init__(self):
