@@ -7,7 +7,7 @@ heap数据结构主要用于表示priority queue。 在Python中，可以使用*
 - **heappush(heap, ele): 将参数中的ele插入堆中。 同时调整顺序，以便维护堆结构。
 - **heappop(heap)**: 从堆中删除并返回**最小的元素**。 同时调整顺序，以便维护堆结构。
 #### 代码示例如下：
-```
+```Python
 # Python code to demonstrate working of
 # heapify(), heappush() and heappop()
 
@@ -45,7 +45,7 @@ The popped and smallest element is : 1
 - **heappushpop(heap, ele)**: 先push后pop
 - **heapreplace(heap, ele)**: 先pop后push。
 #### 示例代码：
-```
+```Python
 # Python code to demonstrate working of
 # heappushpop() and heapreplce()
 
@@ -80,7 +80,7 @@ The popped item using heapreplace() is : 3
 - **nlargest(k, iterable, key = fun)**: 返回迭代器里前k大的数，同时满足key。
 - **nsmallest(k, iterable, key = fun)**: 返回迭代器里前k小的数，同时满足key。
 #### 示例代码：
-```
+```Python
 # Python code to demonstrate working of
 # nlargest() and nsmallest()
 
