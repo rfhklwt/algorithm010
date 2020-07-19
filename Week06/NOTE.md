@@ -16,5 +16,85 @@
 
 假如在状态方程中，计算状态dp[i][j]需要的都是dp[i][j]相邻的状态，那么久可以对dp数组进行降维。通常情况下，我们会降维把size为(m, n)的2维dp降维成size为(1, n)1维的dp。这样子我们可以通过循环1->m来不断改变size为(1, n)1维的dp来达到目的。具体的还要通过做题才有更深的体会。
 
+
+
+## 一道困难的题的思路分享
+**[max-sum-of-rectangle-no-larger-than-k](https://leetcode-cn.com/problems/max-sum-of-rectangle-no-larger-than-k/)**
+
+> 给定一个非空二维矩阵 matrix 和一个整数 k，找到这个矩阵内部不大于 k 的最大矩形和。 <br>
+
+在解这个问题前，我们先做另一道题：
+
+> 给定一个长度为n的数组，求数组的最大子序和，这个子序和要求不能超过k。
+
+首先，比如说[3, -1, 2, 4, -3, 2]，对于这个数组里我们假如取(2, 4)之间的子序列和（记为sum[2, 4]），即取[2, 4, -3]的和。而[2, 4, -3]的和其实会等于[3, -1, 2, 4, -3]的和**减去**[3, -1]的和。因此我们可以有这个结论：
+sum[i, j] = sum[0, j] - sum[0, i - 1]。所以其实我们就是要求i和j，并且sum[i, j] <= k同时还得是最接近k的。
+
+那么我们其实可以把问题转成，求sum[0, j] - sum[0, i - 1] <= k 同时保持最大。把这个式子变换一下就会是sum[0, j] - k <= sum[0, i - 1]
+
+我们注意到sum[0, i - 1]会先计算出来，然后后面才计算出sun[0, j]。
+
+这样的话我们可以把初始化一个cum，同时依次把数组的值加进去。每加一个，就把这个值丢到一个箱子里。并且每次把这个cum - k，并且在箱子里找到比cum - k大的值（这些值可能很多个，但我们只需要最小的那个）。为了查找方便，我们就把这个箱子维护成排序的箱子。
+
+整个代码如下：
+```Python
+class Solution:
+  def maxSumSubarray(self, nums, k):
+    # 排序的箱子
+    array = [0]
+    # 初始化cum
+    cum = 0
+    for num in nums:
+      cum += num
+      # 在array里找比cur - k大但最接近的数的位置
+      # bisect_left是在array里返回比cur - k应该插入的位置
+      loc = bisect.bisect_left(array, cur - k)
+      # loc > len(arr)说明array里面的数都比cur - k小，代表没有找到值
+      if loc < len(array):
+        # 目前，对于每次遍历，cum - array[loc]都会是比k小的，但是我们不仅要比k小，我们还要最接近k，因此在这些数里面找最大
+        res = max(cum - array[loc], res)
+      # 记得把cum丢进箱子，并且还要维护排序
+      bisect.insort(array, cur)
+      return res
+```
+  搞懂这道题后，我们现在就学会了如何在一个给定的array里面找子序列和最接近k的子序列了。
+  接着我们还需要掌握另一个知识，如何在一个给定的矩阵里找到子矩阵最大的和。这里有个链接讲得很通俗易懂，请点击[”click me“](https://www.youtube.com/watch?v=yCQN096CwWM)。
+
+  通俗来讲就是，假设矩阵的长和宽分别是row和col。我们每次会定一个左边界（L = 0 -> col），然后弄一个array， 这个array会是长度为row的, 然后定一个右边界(R = L -> col )，然后不断取这个array的最接近k的子序列（取子序列这个操作我们前面讲过）。具体看代码把：
+```Python
+  class Solution:
+    import bisect
+    def maxSumSubmatrix(self, matrix: List[List[int]], k: int) -> int:
+        row, col = len(matrix), len(matrix[0])
+        res = float('-inf')
+        # 左边界
+        for left in range(col):
+            # 初始化nums（这个nums就是我们后面要用来求接近K的）
+            nums = [0] * row
+            # 右边界
+            for right in range(left, col):
+                for i in range(row):
+                    nums[i] += matrix[i][right]
+                # 在left, right为边界下的矩阵(在这里已经降维成1维的nums了)，
+                # 下面这段求不超过k的最大数值和（跟前面我们讲的如出一辙）
+                # 用来存cum的array（已排序）
+                array = [0]
+                cum = 0
+                for num in nums:
+                    cum += num
+                    loc = bisect.bisect_left(array, cum - k)
+                    if loc < len(array):
+                        res = max(res, cum - array[loc])
+                    bisect.insort(array, cum)
+        return res
+```
+
+
 参考链接：
-https://blog.csdn.net/ailaojie/article/details/83014821
+1. https://blog.csdn.net/ailaojie/article/details/83014821
+2. https://www.quora.com/Given-an-array-of-integers-A-and-an-integer-k-find-a-subarray-that-contains-the-largest-sum-subject-to-a-constraint-that-the-sum-is-less-than-k
+3. https://www.youtube.com/watch?v=yCQN096CwWM
+
+
+
+
