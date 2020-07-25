@@ -1,11 +1,10 @@
 # Week07总结
 
-Trie数代码模板：
+## Trie代码模板：
 ```Python
 # Python
 class Trie(object):
-
-	def __init__(self):
+    def __init__(self):
 		self.root = {}
 		self.end_of_word = "#"
 
@@ -31,7 +30,7 @@ class Trie(object):
 			node = node[char]
 		return True
 ```
-
+>关于字典树一道很经典的例子
 ## [Word Search II](https://leetcode-cn.com/problems/word-search-ii/)
 ```Python
 class Solution:
@@ -61,6 +60,58 @@ class Solution:
 ```
 
 > 时间复杂度分析
+
 假设单词的最大长度为L,那么从一个单元格开始，最初最多可以探索4个方向，最坏的情况下假定所有方向都是有效的，在接下来的search中最多只会有3个方向可以探索（因为不能重复使用）。因此在search期间，最多遍历$4\cdot3^{L - 1}$。因此总的时间复杂度应该是$O(h * w * 4 * 3 ^ {L - 1})$，其中h和w分别是board的长和宽。
+
 > 空间复杂度分析
+
 算法消耗的主要空间是我们构建的 Trie 数据结构。在最坏的情况下，如果单词之间没有前缀重叠，则 Trie 将拥有与所有单词的字母一样多的节点。故为O(N)
+
+## Union Set
+Union Set的图解如图所示，具体实现代码如下：
+![avatar](https://raw.githubusercontent.com/rfhklwt/algorithm010/master/Week07/UnionSet.png)
+
+```Python
+class UnionSet(Object):
+    def __init__(self):
+        p = [i for i in range(n)]
+    def union(self, p, i, j):
+        # 找i的parent节点
+        p1 = self.parent(p, i)
+        # 找j的parent节点
+        p2 = self.parent(p, j)
+        # 把其中一个节点直接挂到另一个节点
+        p[p1] = p2
+        # 你也可以p[p2] = p1
+    def parent(self, p, i):
+        root = i
+        # 依次去找它的根，即parent（原理看图）
+        while p[root] != root:
+            root = p[root]
+        # 查找完顺便给你做下路径压缩（原理看图）
+        while p[i] != i:
+            i, p[i] = p[i], root
+        return root
+```
+
+## 双向bfs
+模板
+```python
+def BFS(graph, start, end):
+    visited = set()
+	front, back = {start}, {end}
+	while front:
+        new_set = set()
+        for node in front:
+            nodes = generate_related_nodes(node)
+            if nodes in back:
+                return
+            if nodes not in visited:
+                new_set.add(nodes)
+                visited.add(node)
+		front = new_set
+
+        if len(front) > len(back):
+            front, back = back, front
+
+```
