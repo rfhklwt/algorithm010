@@ -1,1 +1,191 @@
-学习笔记
+# Week08总结
+## 位运算
+### XOR异或的一些高级操作：
+> 异或：相同为0，不同为1，可用“不进位的加法”来理解
+
+* Tip：分析的时候我们只要想0会变成什么，1会变成什么，就好了
+
+x ^ 0 = x ( 0跟0会变0， 1跟0会变1，也就是不变 )
+
+x ^ 1s = ~x ( 这里1s表示全部都是1,即1s = ~0 ) （ 1跟1会变0， 0跟1会变1，即全部取反 ）
+
+x ^ (~x) = 1s
+
+x ^ x = 0
+
+c = a ^ b => a ^ c = b => b ^ c = a ( 交换律 )
+
+a ^ b ^ c = a ^ (b ^ c) = (a ^ b) ^ c ( 结合律 )
+
+### 指定位置的位运算
+
+| 要求 | 运算 | 解释 |
+|:---|:-----|:---|
+| 将x最右边的n位清零 | x & (~0 << n) | 把全1全部左移n位，那么n坐标左边都是1，右边都是0，再与1进行and操作
+| 获取x的第n位值 | (x >> n) & 1 | 把x全部右移n位，那么x的第n位值就到了最后一位，接着再跟1进行与就能取出该值（注意是1不是全1）
+| 获取x的第n位的幂值 | x & (1 << n) | 把1左移n位（注意n坐标左边都是0，右边也都是0），再与x进行and操作
+| 仅将第n位置为1 | x \| (1 << n)| 把1左移n位，再与x进行or操作
+| 仅将第n位置为0 | x & (~(1 << n)) | 把1左移n位再取反，会得到，n坐标为0，左边和右边都为1，再与x进行and操作
+| 将x最高位至第n位（含）清零 | x & ((1 << n) - 1)
+
+### 实战位运算要点
+* 判断奇偶：
+
+    * x % 2 == 1 -> (x & 1) == 1
+
+    * x % 2 == 0 -> (x & 1) == 0
+
+* x >> 1 -> x / 2
+
+    * 即：x = x / 2 -> x = x >> 1
+
+    * mid = (left + right) / 2 -> mid = (left + right) >> 1
+
+* x = x & (x - 1)：清零最低位的1
+
+* x & -x => 得到最低位的1
+
+* x & ~x => 0
+
+## Boom Filter的简单实现
+```python
+# Python
+from bitarray import bitarray
+import mmh3
+class BloomFilter:
+	def __init__(self, size, hash_num):
+		self.size = size
+		self.hash_num = hash_num
+		self.bit_array = bitarray(size)
+		self.bit_array.setall(0)
+	def add(self, s):
+		for seed in range(self.hash_num):
+			result = mmh3.hash(s, seed) % self.size
+			self.bit_array[result] = 1
+	def lookup(self, s):
+		for seed in range(self.hash_num):
+			result = mmh3.hash(s, seed) % self.size
+			if self.bit_array[result] == 0:
+				return "Nope"
+		return "Probably"
+bf = BloomFilter(500000, 7)
+bf.add("dantezhao")
+print (bf.lookup("dantezhao"))
+print (bf.lookup("yyj"))
+```
+
+## LRU Cache
+```python
+# Python
+
+class LRUCache(object):
+
+	def __init__(self, capacity):
+		self.dic = collections.OrderedDict()
+		self.remain = capacity
+
+	def get(self, key):
+		if key not in self.dic:
+			return -1
+		v = self.dic.pop(key)
+		self.dic[key] = v   # key as the newest one
+		return v
+
+	def put(self, key, value):
+		if key in self.dic:
+			self.dic.pop(key)
+		else:
+			if self.remain > 0:
+				self.remain -= 1
+			else:   # self.dic is full
+				self.dic.popitem(last=False)
+		self.dic[key] = value
+```
+
+## 排序
+### O(n^2)
+#### 选择排序（Selection Sort）
+* 初始状态：无序区为R[1..n]，有序区为空；
+* 第i趟排序(i = 1, 2, 3 … n-1)开始时，当前有序区和无序区分别为R[1..i-1]和R(i..n）。该趟排序从当前无序区中-选出关键字最小的记录 R[k]，将它与无序区的第1个记录R交换，使R[1..i]和R[i + 1..n)分别变为记录个数增加1个的新有序区和记录个数减少1个的新无序区；
+* n-1趟结束，数组有序化了。
+```python
+def selectionSort(ret):
+    n = len(ret)
+    for i in range(len(ret)):
+        minIndex = i
+        for j in range(i + 1, len(ret)):
+            if ret[j] < ret[minIndex]:
+                minIndex = j
+        # 交换
+        ret[i], ret[minIndex] = ret[minIndex], ret[i]
+    return ret
+```
+
+#### 插入排序（Insertion Sort）
+* 从第一个元素开始，该元素可以认为已经被排序；
+* 取出下一个元素，在已经排序的元素序列中从后向前扫描；
+* 如果该元素（已排序）大于新元素，将该元素移到下一位置；
+* 重复步骤3，直到找到已排序的元素小于或者等于新元素的位置；
+* 将新元素插入到该位置后；
+* 重复步骤2~5。
+```python
+def insertionSort(ret):
+    n = len(ret)
+    for i in range(1, n):
+        preIndex, current = i - 1, ret[i]
+        while preIndex >= 0 and ret[preIndex] > current:
+            ret[preIndex + 1] = ret[preIndex]
+            preIndex -= 1
+        ret[preIndex + 1] = current
+    return ret
+```
+
+#### 冒泡排序(Bubble Sort)
+* 比较相邻的元素。如果第一个比第二个大，就交换它们两个；
+* 对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对，这样在最后的元素应该会是最大的数；
+* 针对所有的元素重复以上的步骤，除了最后一个；
+* 重复步骤1~3，直到排序完成。
+```python
+def bubbleSort(ret):
+    n = len(ret)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if ret[j] > ret[j + 1]:
+                ret[j], ret[j + 1] = ret[j + 1], ret[j]
+    return ret
+```
+### O(nlogn)
+#### 归并排序
+* 把长度为n的输入序列分成两个长度为n/2的子序列；
+* 对这两个子序列分别采用归并排序；
+* 将两个排序好的子序列合并成一个最终的排序序列。
+```python
+def mergeSort(ret):
+    if len(ret) > 1:
+        mid = len(ret) // 2
+        L = ret[:mid]
+        R = ret[mid:]
+        mergeSort(L)
+        mergeSort(R)
+
+        i = j = k = 0
+        # Copy data to temp arrays L[] and R[]
+        while i < len(L) and j < len(R):
+            if L[i] < R[j]:
+                ret[k] = L[i]
+                i += 1
+            else:
+                ret[k] = R[j]
+                j += 1
+            k += 1
+        # Checking if any element was left
+        while i < len(L):
+            ret[k] = L[i]
+            i += 1
+            k += 1
+        while j < len(R):
+            ret[k] = R[j]
+            j += 1
+            k += 1
+    return ret
+```

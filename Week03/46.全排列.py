@@ -25,7 +25,6 @@ class Solution:
                 for i in range(len(ele) + 1):
                     p.append(ele[:i] + [n] + ele[i:])
             res = p
-        return res
 
 
 # @lc code=end
