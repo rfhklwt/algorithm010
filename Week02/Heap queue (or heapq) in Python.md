@@ -4,7 +4,7 @@ heap数据结构主要用于表示priority queue。 在Python中，可以使用*
 
 ### 相关操作
 - **heapify(iterable)**: 将可迭代对象转换为堆数据结构。 即按堆顺序。
-- **heappush(heap, ele): 将参数中的ele插入堆中。 同时调整顺序，以便维护堆结构。
+- **heappush(heap, ele)**: 将参数中的ele插入堆中。 同时调整顺序，以便维护堆结构。
 - **heappop(heap)**: 从堆中删除并返回**最小的元素**。 同时调整顺序，以便维护堆结构。
 #### 代码示例如下：
 ```Python
