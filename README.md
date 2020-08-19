@@ -24,3 +24,5 @@
 [6. 拓扑排序专栏](https://github.com/rfhklwt/algorithm010/blob/master/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F%E4%B8%93%E6%A0%8F.md)
 
 [7. 染色问题专栏](https://github.com/rfhklwt/algorithm010/blob/master/%E6%9F%93%E8%89%B2%E9%97%AE%E9%A2%98%E4%B8%93%E6%A0%8F.md)
+
+[8. 平衡二叉树专栏]()
