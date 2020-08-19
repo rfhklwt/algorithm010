@@ -26,3 +26,5 @@
 [7. 染色问题专栏](https://github.com/rfhklwt/algorithm010/blob/master/%E6%9F%93%E8%89%B2%E9%97%AE%E9%A2%98%E4%B8%93%E6%A0%8F.md)
 
 [8. 平衡二叉树专栏](https://github.com/rfhklwt/algorithm010/blob/master/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%93%E6%A0%8F.md)
+
+[9. 链表或图克隆类专栏](https://github.com/rfhklwt/algorithm010/blob/master/%E9%93%BE%E8%A1%A8%E6%88%96%E5%9B%BE%E5%85%8B%E9%9A%86%E7%B1%BB%E4%B8%93%E6%A0%8F.md)
