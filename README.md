@@ -2,7 +2,7 @@
 ## **前言**
 * ### 时光荏苒，白驹过隙，将此文给未来的自己，好好努力，不让过去努力的点点滴滴白费。
 
-## **学习笔记总结**
+## **学习笔记总结(会持续更新)**
 ### **数据结构系列**
 [1. 数据结构之队列](https://github.com/rfhklwt/algorithm010/blob/master/Week01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E9%98%9F%E5%88%97.md)
 
@@ -25,4 +25,4 @@
 
 [7. 染色问题专栏](https://github.com/rfhklwt/algorithm010/blob/master/%E6%9F%93%E8%89%B2%E9%97%AE%E9%A2%98%E4%B8%93%E6%A0%8F.md)
 
-[8. 平衡二叉树专栏]()
+[8. 平衡二叉树专栏](https://github.com/rfhklwt/algorithm010/blob/master/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%93%E6%A0%8F.md)
