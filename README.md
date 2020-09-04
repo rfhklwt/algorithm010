@@ -19,9 +19,9 @@
 
 [4. 动态规划专栏2](https://github.com/rfhklwt/algorithm010/blob/master/Week09/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E4%B8%93%E6%A0%8F2.md)
 
-[5. 动态规划专栏3]([https://github.com/rfhklwt/algorithm010/blob/master/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E4%B8%93%E6%A0%8F3.md](https://github.com/rfhklwt/algorithm010/blob/master/动态规划专栏3.md))
+[5. 动态规划专栏3](https://github.com/rfhklwt/algorithm010/blob/master/动态规划专栏3.md)
 
-[6. 动态规划专栏4]([https://github.com/rfhklwt/algorithm010/blob/master/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E4%B8%93%E6%A0%8F4.md](https://github.com/rfhklwt/algorithm010/blob/master/动态规划专栏4.md))
+[6. 动态规划专栏4](https://github.com/rfhklwt/algorithm010/blob/master/动态规划专栏4.md)
 
 [7. 位运算和排序专栏](https://github.com/rfhklwt/algorithm010/blob/master/Week08/%E4%BD%8D%E8%BF%90%E7%AE%97%E5%92%8C%E6%8E%92%E5%BA%8F%E4%B8%93%E6%A0%8F.md)
 
